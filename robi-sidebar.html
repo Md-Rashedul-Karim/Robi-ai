@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text IQ - AI Writing Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <script type="text/javascript" async=""
+    src="https://cdn.segment.com/analytics.js/v1/iCkMy7ymtJ9qYzQRXkQpnAJEq7D4NyMU/analytics.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary-color: #0070f3;
+      --secondary-color: #7928ca;
+      --accent-color: #ff4081;
+      --background-color: #f7f9fc;
+      --text-color: #1a1a2e;
+      --font-main: "Circular Std", "Inter", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --border-radius: 12px;
+      --transition-speed: 0.3s;
+      --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    .header {
+      /* background: linear-gradient(90deg, #ee0a0b, #f05a22); */
+      background: #02091c;
+      background-image: url('bg-banner-top.jpg');
+      background-size: cover;
+      background-position: top center;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+      overflow: hidden;
+
+
+      /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important; */
+      /* background: linear-gradient(90deg,
+          rgba(238, 10, 11, 1) 0%,
+          rgba(240, 90, 34, 1) 50%,
+          rgba(238, 10, 11, 1) 100%);
+      border-radius: var(--border-radius) !important;
+      box-shadow: var(--box-shadow);
+      transition: all var(--transition-speed) ease; */
+    }
+
+    .header h1 {
+      /* font-size: clamp(1rem, 10vw, 5rem); */
+      margin-bottom: 0.5rem;
+      color: #000;
+      font-weight: bold;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 2rem 1rem;
+      background: #f9f9f9;
+      text-align: center;
+    }
+
+    .services .container,
+    .pricing .container,
+    #header .container {
+      width: 1024px !important;
+      max-width: 70% !important;
+    }
+
+    #footer .container {
+      width: 1024px !important;
+      max-width: 70% !important;
+    }
+
+    .services h2,
+    .pricing h2 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      border: #ddd solid 2px;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .service-cards {
+      /* display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem; */
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(29%, 1fr));
+      grid-gap: 2rem;
+    }
+
+    .card-basic-pro {
+      display: grid;
+      grid-template-columns: repeat(3, 30%);
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2),
+        0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+
+    @media only screen and (max-width: 769px) {
+      .service-cards {
+        grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
+
+        
+      }
+
+      .card-basic-pro {
+        grid-template-columns: repeat(2, 45%);
+      }
+
+      .header {
+        /* background-size: cover; */
+        padding: 3rem 1rem;
+      }
+      .leftside-bar,
+      .rightside-bar {
+            width: 10%;
+        }
+        
+    }
+
+    @media only screen and (max-width: 680px) {
+      .service-cards {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+      }
+
+      .card-basic-pro {
+        grid-template-columns: repeat(1, 98%);
+      }
+
+      .header {
+        /* background-size: cover; */
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 520px) {
+      .service-cards {
+        grid-template-columns: repeat(auto-fit, minmax(98%, 1fr));
+      }
+
+      .pricing-cards {
+        display: block !important;
+      }
+
+      .pricing-cards .basic {
+
+        margin-bottom: 10px !important;
+      }
+
+      .header {
+        /* background-size: cover; */
+        padding: 1rem 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 420px) {
+      .service-cards {
+        grid-template-columns: repeat(auto-fit, minmax(98%, 1fr));
+      }
+
+      .header {
+        /* background-size: cover; */
+        padding: 1rem 1rem;
+      }
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card {
+      background: white !important;
+      border-radius: var(--border-radius) !important;
+      border: 1px solid rgba(0, 0, 0, 0.05) !important;
+      box-shadow: var(--box-shadow);
+      padding: 1.5rem !important;
+      margin: 1rem 0 !important;
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .services .card {
+      /* background: white;
+      padding: 1rem;
+      width: auto;
+      text-align: left; */
+
+      /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+
+      box-shadow: rgb(125 125 125 / 40%) 5px 5px, rgb(101 101 101 / 20%) 15px 15px, rgb(125 125 125 / 30%) 10px 10px;
+
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: rgb(237 237 237);
+
+      /* background: rgb(251,0,0);
+background: linear-gradient(90deg, rgba(251,0,0,1) 0%, rgba(167,179,187,1) 100%); */
+
+      padding: 2rem !important;
+      text-align: center;
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .services .card:hover {
+      /* transform: translateY(-10px); */
+      box-shadow: 5px 5px 10px rgb(0 0 0 / 25%);
+      border: #ccc solid 1px;
+    }
+
+    .services .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    /* Pricing Section */
+    .pricing {
+      padding: 2rem 1rem;
+      text-align: center;
+      background: #f9f9f9;
+    }
+
+    .pricing .card {
+      /* background: white;
+      padding: 1rem;
+      width: auto;
+      text-align: left; */
+
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      border-radius: 8px;
+      background: white !important;
+
+      padding: 2rem !important;
+      text-align: center;
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .pricing .card::before {
+      content: "BEST VALUE";
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      background: #ff4081;
+      color: white;
+      padding: 0.5rem 2rem;
+      transform: rotate(45deg);
+      font-size: 0.7rem;
+    }
+
+    .pricing .pro::before {
+      content: "BEST VALUE";
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      background: #ee1a10;
+      color: white;
+      padding: 0.5rem 2rem;
+      transform: rotate(45deg);
+      font-size: 0.7rem;
+    }
+
+
+
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .pricing h2 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+
+    .pricing-cards .card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .pricing-cards .card ul li {
+      text-align: left;
+    }
+
+    .pricing-cards .basic {
+      background: #f9f9f9;
+      border: 2px solid #ccc;
+    }
+
+    .pricing-cards .basic p {
+      color: #ff4081;
+
+    }
+
+    .pricing-cards .pro p {
+      color: #ee1a10;
+
+    }
+
+    .pricing-cards .pro {
+      background: #fff5f5;
+      border: 2px solid #ccc;
+    }
+
+    button {
+      background: #4e54c8;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: #3d3fbf;
+    }
+
+    /* Footer */
+    .footer {
+      background: #4e54c8;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    .footer-links {
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none !important;
+      margin: 0 0.5rem 0 0;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .social-media a {
+      margin-bottom: 10px;
+      display: inline-block;
+      border-radius: 50%;
+    }
+
+    .social-media a.linkedin:hover {
+      background-color: #0077b5;
+      color: #fff;
+    }
+
+    .social-media a.facebook:hover {
+      background-color: #3b5998;
+      color: #fff;
+    }
+
+    .social-media a.instagram:hover {
+      background-image: linear-gradient(45deg, #f9d86b, #ed634a 50.52%, #ba46a5);
+      color: #fff;
+    }
+
+    .social-media a.twitter:hover {
+      background-color: #138be5;
+      color: #fff;
+    }
+
+
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer p {
+      margin-top: 1rem;
+    }
+
+    /* ======================= */
+    .key {
+      font-size: clamp(2rem, 12vw, 6rem);
+      display: inline-block;
+      /* letter-spacing: -1vw; */
+      transition: transform 0.2s;
+    }
+
+
+
+    @keyframes pressDown1 {
+
+      30%,
+      40%,
+      100% {
+        transform: translateY(0);
+      }
+
+      35% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown2 {
+
+      70%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      75% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown3 {
+
+      30%,
+      40%,
+      100% {
+        transform: translateY(0);
+      }
+
+      35% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown4 {
+
+      40%,
+      50%,
+      100% {
+        transform: translateY(0);
+      }
+
+      45% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown5 {
+
+      20%,
+      30%,
+      100% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown6 {
+
+      60%,
+      70%,
+      100% {
+        transform: translateY(0);
+      }
+
+      65% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown7 {
+
+      10%,
+      20%,
+      100% {
+        transform: translateY(0);
+      }
+
+      15% {
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes pressDown8 {
+
+      35%,
+      45%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(10px);
+      }
+    }
+
+
+
+    .key:nth-child(1) {
+      animation: pressDown1 2s infinite;
+    }
+
+    .key:nth-child(2) {
+      animation: pressDown2 3s infinite;
+    }
+
+    .key:nth-child(3) {
+      animation: pressDown3 4s infinite;
+    }
+
+    .key:nth-child(4) {
+      animation: pressDown4 2.5s infinite;
+      margin-right: 30px;
+    }
+
+    .key:nth-child(5) {
+      animation: pressDown5 2.5s infinite;
+    }
+
+    .key:nth-child(6) {
+      animation: pressDown6 3.5s infinite;
+
+    }
+
+    .key:nth-child(7) {
+      animation: pressDown7 2.2s infinite;
+    }
+
+    .key:nth-child(8) {
+      animation: pressDown8 3.2s infinite;
+    }
+
+
+
+
+    /* extra stuff */
+    .jux-linx {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px;
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+    }
+
+    a {
+      text-decoration: none;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: white;
+      /* background-color: black; */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      padding: 5px 10px;
+      transition: 0.1s all ease-in;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header">
+    <div class="container ">
+      <div class="row justify-content-center align-items-center g-2">
+        <div class="col-12 header">
+          <!-- <h3 class="animate-charcter"> Text IQ </h3> -->
+          <!-- <h1>Text IQ</h1> -->
+          <div class="keyboard">
+            <span class="key">T</span>
+            <span class="key">E</span>
+            <span class="key">X</span>
+            <span class="key">T</span>
+
+            <span class="key">I</span>
+            <span class="key">Q</span>
+          </div>
+          <p>Your All-in-One AI Writing Assistant</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <style>
+    .leftside-bar {
+      position: absolute;
+      top: 50%;
+      left: 2%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 13%;
+
+    }
+
+    .leftside-bar img {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .leftside-bar p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .leftside-bar ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .leftside-bar ul li {
+      margin-bottom: 10px;
+    }
+
+    .leftside-bar ul li a {
+      color: #333;
+      text-decoration: none;
+      font-size: clamp(0.6rem, 2vw, 1rem)
+    }
+
+    .leftside-bar ul li a:hover {
+      color: #007bff;
+    }
+
+    .rightside-bar {
+      position: absolute;
+      top: 50%;
+      right: 2%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 13%;
+    }
+
+    .rightside-bar img {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .rightside-bar p {
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .rightside-bar ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .rightside-bar ul li {
+      margin-bottom: 10px;
+    }
+
+    .rightside-bar ul li a {
+      color: #333;
+      text-decoration: none;
+      font-size: clamp(0.6rem, 2vw, 1rem)
+    }
+
+    .rightside-bar ul li a:hover {
+      color: #007bff;
+    }
+   
+  </style>
+  <section class="services">
+
+    <div class="container">
+      <div class="leftside-bar">                
+        <img src="banner1.jpg" alt="Sidebar Image" class="sidebar-image img-fluid">        
+        <img src="banner2.jpg" alt="Sidebar Image" class="sidebar-image img-fluid">        
+        <img src="banner3.jpg" alt="Sidebar Image" class="sidebar-image img-fluid">        
+      </div>
+      <div class="row justify-content-center align-items-center g-2">
+        <div class="col-md-12">
+          <h2>Our AI Services</h2>
+          <div class="service-cards">
+            <div class="card">
+              <h3>Resume Builder</h3>
+              <p>Professional resume creation with AI-powered suggestions.</p>
+              <a href="" class="btn btn-danger">Click</a>
+            </div>
+            <div class="card">
+              <h3>Cover Letter</h3>
+              <p>Personalized cover letters tailored to job descriptions.</p>
+              <a href="" class="btn btn-danger">Click</a>
+            </div>
+            <div class="card">
+              <h3>Text Analyzer</h3>
+              <p>
+                Advanced text analysis with readability scores and detailed
+                insights.
+              </p>
+              <a href="" class="btn btn-danger">Click</a>
+            </div>
+            <div class="card">
+              <h3>Paraphrase</h3>
+              <p>
+                Intelligent paraphrasing with customizable tone and style.
+              </p>
+              <a href="" class="btn btn-danger">Click</a>
+            </div>
+            <div class="card">
+              <h3>Text Summarizer</h3>
+              <p>Smart summarization for articles, documents, and more.</p>
+              <a href="" class="btn btn-danger">Click</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rightside-bar">
+        <img src="banner4.jpg" alt="Sidebar Image" class="sidebar-image img-fluid">        
+        <img src="banner5.jpg" alt="Sidebar Image" class="sidebar-image img-fluid">        
+        <img src="banner6.jpg" alt="Sidebar Image" class="sidebar-image img-fluid"> 
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="container">
+
+      <div class="row justify-content-center align-items-center g-2">
+        <div class="col-md-12">
+          <h2>Choose Your Plan</h2>
+        </div>
+
+        <div class="col-md-12">
+          <div class=" pricing-cards card-basic-pro">
+            <div class="card onedemand">
+              <h3>One Demand</h3>
+              <p><strong>TK 10/month</strong></p>
+              <ul>
+                <li>Text one</li>
+                <li>Text two</li>
+                <li>Text three</li>
+                <li>Text four</li>
+              </ul>
+              <button>Start One Demand</button>
+            </div>
+            <div class="card basic">
+              <h3>Basic</h3>
+              <p><strong>TK 50/month</strong></p>
+              <ul>
+                <li>Text Analyzer</li>
+                <li>Paraphrase</li>
+                <li>Summarizer</li>
+                <li>Email support</li>
+              </ul>
+              <button>Start Basic Plan</button>
+            </div>
+            <div class="card pro">
+              <h3>Pro</h3>
+              <p><strong>TK 100/month</strong></p>
+              <ul>
+                <li>All services</li>
+                <li>Unlimited download of Templates</li>
+                <li>Advanced features</li>
+                <li>24/7 priority support</li>
+              </ul>
+              <button>Start Pro Plan</button>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="container footer">
+      <div class="row justify-content-center align-items-center g-2">
+        <div class="col-12 ">
+          <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">FAQ</a>
+            <a href="#">Terms & Conditions</a>
+          </div>
+          <div class="social-media">
+            <a href="#" class="linkedin"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+          <p>&copy; 2025 Text IQ. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
